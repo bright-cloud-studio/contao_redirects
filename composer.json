@@ -26,7 +26,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Bcs\\ContaoRedirects\\": "src"
+            "Bcs\\RedirectBundle\\": "src"
         },
         "classmap": [
             "src/Resources/contao"
