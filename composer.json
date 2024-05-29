@@ -14,15 +14,15 @@
         }
     ],
     "support":{
-        "issues": "https://github.com/bright-cloud-studio/contao-popups/issues",
-        "source": "https://github.com/bright-cloud-studio/contao-popups"
+        "issues": "https://github.com/bright-cloud-studio/contao_redirects/issues",
+        "source": "https://github.com/bright-cloud-studio/contao_redirects"
     },
     "require":{
         "php": "^8.1",
         "contao/core-bundle": "^5.3"
     },
     "extra":{
-        "contao-manager-plugin": "Bcs\\PopupBundle\\ContaoManager\\Plugin"
+        "contao-manager-plugin": "Bcs\\RedirectBundle\\ContaoManager\\Plugin"
     },
     "autoload": {
         "psr-4": {
