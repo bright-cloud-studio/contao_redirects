@@ -29,7 +29,7 @@
     "extra": {
         "contao": {
             "sources": {
-                "system/modules/redirect_manager": "system/modules/redirect_manager"
+                "system/modules/contao_redirects": "system/modules/contao_redirects"
             }
         }
     },
