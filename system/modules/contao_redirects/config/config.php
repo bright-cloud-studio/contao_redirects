@@ -44,6 +44,4 @@ $GLOBALS['TL_MODELS']['tl_asc_redirect'] = 'Bcs\Model\Redirect';
 /**
  * Styles
  */
- if (version_compare(VERSION, '4.4', '>=')) {
-	$GLOBALS['TL_CSS'][] = 'system/modules/contao_redirects/assets/css/backend-contao4.css|static';
-}
+$GLOBALS['TL_CSS'][] = 'system/modules/contao_redirects/assets/css/backend-contao4.css|static';
