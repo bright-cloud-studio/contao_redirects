@@ -1,37 +1,41 @@
 {
     "name":"bright-cloud-studio/contao_redirects",
-    "description":"URL redirection module for Contao 4.9+",
-    "homepage": "https://andrewstevens.consulting",
-    "keywords":["contao", "htaccess", ".htaccess", "redirect", "rewrite", "url", "301", "302", "bright", "cloud", "studio"],
-    "type":"contao-module",
-    "license":"LGPL-3.0-or-later",
+    "description":"Allows internal and external redirects to be set within Contao.",
+    "keywords": ["contao", "redirect", "htaccess", "rewrite", "url", "301", "302", "bright", "cloud", "studio"],
+    "type": "contao-bundle",
+    "homepage": "http://brightcloudstudio.com/",
+    "license": "LGPL-3.0+",
     "authors":[
         {
-            "name":"Bright Cloud Studio",
-            "homepage":"https://brightcloudstudio.com"
+            "name": "Bright Cloud Studio",
+            "homepage": "https://brightcloudstudio.com",
+            "email": "mark@brightcloudstudio.com",
+            "role": "Developer"
         }
     ],
-    "require":{
-        "php": ">=7.4",
-        "contao/core-bundle": ">=4.13",
-        "contao-community-alliance/composer-plugin": "~2.4 || ~3.0"
+    "support":{
+        "issues": "https://github.com/bright-cloud-studio/contao-popups/issues",
+        "source": "https://github.com/bright-cloud-studio/contao-popups"
     },
-    "require-dev": {
-        "contao/manager-plugin": "^2.0"
+    "require":{
+        "php": "^8.1",
+        "contao/core-bundle": "^5.3"
+    },
+    "extra":{
+        "contao-manager-plugin": "Bcs\\PopupBundle\\ContaoManager\\Plugin"
     },
     "autoload": {
         "psr-4": {
-            "Bcs\\": [
-                "system/modules/contao_redirects/library/Bcs"
-            ]
-        }
-    },
-    "extra": {
-        "contao": {
-            "sources": {
-                "system/modules/contao_redirects": "system/modules/contao_redirects"
-            }
-        }
-    },
-    "minimum-stability": "dev"
+            "Bcs\\ContaoRedirects\\": "src"
+        },
+        "classmap": [
+            "src/Resources/contao"
+        ],
+        "exclude-from-classmap": [
+            "src/Resources/contao/config/",
+            "src/Resources/contao/dca/",
+            "src/Resources/contao/languages/",
+            "src/Resources/contao/templates/"
+        ]
+    }
 }
