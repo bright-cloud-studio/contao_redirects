@@ -18,20 +18,15 @@ $GLOBALS['BE_MOD']['redirect_manager']['redirects'] = array(
 	'icon'   => 'system/modules/oces_navigation/assets/icons/page_tag_navigation.png'
 );
 
-
 // Front end modules
 $GLOBALS['FE_MOD']['redirect_manager'] = array('redirect_404' => 'RedirectManager\Module\Redirect404');
-
 
 /**
  * Models
  */
 $GLOBALS['TL_MODELS']['tl_asc_redirect'] = 'RedirectManager\Model\Redirect';
 
-
 /**
  * Styles
  */
- if (version_compare(VERSION, '4.4', '>=')) {
-	$GLOBALS['TL_CSS'][] = 'system/modules/redirect_manager/assets/css/backend-contao4.css|static';
-}
+$GLOBALS['TL_CSS'][] = 'system/modules/redirect_manager/assets/css/backend-contao4.css|static';
