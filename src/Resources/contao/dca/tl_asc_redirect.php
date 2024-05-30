@@ -21,7 +21,7 @@ $GLOBALS['TL_DCA']['tl_asc_redirect'] = array
     // Config
     'config' => array
     (
-        'dataContainer'               => 'DC_Table::class',
+        'dataContainer'               => DC_Table::class,
         'enableVersioning'            => true,
 		'onload_callback'             => array
 		(
