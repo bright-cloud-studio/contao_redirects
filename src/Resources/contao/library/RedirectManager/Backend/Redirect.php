@@ -22,6 +22,7 @@ use Contao\FilesModel;
 use Contao\Image;
 use Contao\Input;
 use Contao\PageModel;
+use Contao\StringUtil;
 use Contao\Versions;
 
 
@@ -74,7 +75,7 @@ class Redirect extends Contao_Backend
 			$icon = 'invisible.gif';
 		}
 
-		return '<a href="'.$this->addToUrl($href).'" title="'.specialchars($title).'"'.$attributes.'>'.Image::getHtml($icon, $label).'</a> ';
+		return '<a href="'.$this->addToUrl($href).'" title="'.StringUtil::specialchars($title).'"'.$attributes.'>'.Image::getHtml($icon, $label).'</a> ';
 	}
 
 
