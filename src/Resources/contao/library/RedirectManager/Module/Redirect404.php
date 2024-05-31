@@ -17,11 +17,15 @@ use RedirectManager\Model\Redirect as RedirectModel;
 
 use Contao\BackendTemplate;
 use Contao\Controller;
+use Contao\CoreBundle\Routing\ScopeMatcher;
 use Contao\Database;
 use Contao\Environment;
 use Contao\FilesModel;
 use Contao\Module as Contao_Module;
 use Contao\PageModel;
+use Symfony\Component\HttpFoundation\RequestStack;
+
+use Contao\System;
 
 
 /**
@@ -36,15 +40,19 @@ class Redirect404 extends Contao_Module
      */
     protected $strTemplate = 'mod_redirect_manager';
 
-
+    
     /**
      * Display a wildcard in the back end
      * @return string
      */
     public function generate()
     {
-        if (TL_MODE == 'BE')
-        {
+        
+        $request = System::getContainer()->get('request_stack')->getCurrentRequest();
+
+    	// We are in the back end, so show the element
+    	if ($request && System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest($request))
+    	{
             $objTemplate = new BackendTemplate('be_wildcard');
 
             $objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['FMD']['dir_list'][0]) . ' ###';
