@@ -81,7 +81,7 @@ class Redirect extends Contao_Backend
 
 	public function toggleVisibility($intId, $blnVisible, DataContainer $dc=null)
 	{
-		$objVersions = new Versions('tl_redirect_manager', $intId);
+		$objVersions = new Versions('tl_asc_redirect', $intId);
 		$objVersions->initialize();
 
 		// Trigger the save_callback
@@ -89,7 +89,7 @@ class Redirect extends Contao_Backend
 		{
 			foreach ($GLOBALS['TL_DCA']['tl_asc_redirect']['fields']['published']['save_callback'] as $callback)
 			{
-				if (is_array($callback))
+				if (is_array($callback))v
 				{
 					$this->import($callback[0]);
 					$blnVisible = $this->$callback[0]->$callback[1]($blnVisible, ($dc ?: $this));
