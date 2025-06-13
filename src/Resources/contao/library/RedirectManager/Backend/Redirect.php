@@ -81,6 +81,7 @@ class Redirect extends Contao_Backend
 
 	public function toggleVisibility($intId, $blnVisible, DataContainer $dc=null)
 	{
+        // Not sure what Versions is
 		$objVersions = new Versions('tl_asc_redirect', $intId);
 		$objVersions->initialize();
 
@@ -106,7 +107,6 @@ class Redirect extends Contao_Backend
 					   ->execute($intId);
 
 		$objVersions->create();
-		//$this->log('A new version of record "tl_asc_redirect.id='.$intId.'" has been created'.$this->getParentEntries('tl_redirect_manager', $intId), __METHOD__, TL_GENERAL);
 	}
 
 }
