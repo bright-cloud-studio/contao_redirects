@@ -85,9 +85,9 @@ class Redirect extends Contao_Backend
 		$objVersions->initialize();
 
 		// Trigger the save_callback
-		if (is_array($GLOBALS['TL_DCA']['tl_redirect_manager']['fields']['published']['save_callback']))
+		if (is_array($GLOBALS['TL_DCA']['tl_asc_redirect']['fields']['published']['save_callback']))
 		{
-			foreach ($GLOBALS['TL_DCA']['tl_redirect_manager']['fields']['published']['save_callback'] as $callback)
+			foreach ($GLOBALS['TL_DCA']['tl_asc_redirect']['fields']['published']['save_callback'] as $callback)
 			{
 				if (is_array($callback))
 				{
@@ -102,11 +102,11 @@ class Redirect extends Contao_Backend
 		}
 
 		// Update the database
-		$this->Database->prepare("UPDATE tl_redirect_manager SET tstamp=". time() .", published='" . ($blnVisible ? 1 : '') . "' WHERE id=?")
+		$this->Database->prepare("UPDATE tl_asc_redirect SET tstamp=". time() .", published='" . ($blnVisible ? 1 : '') . "' WHERE id=?")
 					   ->execute($intId);
 
 		$objVersions->create();
-		$this->log('A new version of record "tl_redirect_manager.id='.$intId.'" has been created'.$this->getParentEntries('tl_redirect_manager', $intId), __METHOD__, TL_GENERAL);
+		$this->log('A new version of record "tl_asc_redirect.id='.$intId.'" has been created'.$this->getParentEntries('tl_redirect_manager', $intId), __METHOD__, TL_GENERAL);
 	}
 
 }
