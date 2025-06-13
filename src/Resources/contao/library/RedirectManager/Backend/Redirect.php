@@ -89,7 +89,7 @@ class Redirect extends Contao_Backend
 		{
 			foreach ($GLOBALS['TL_DCA']['tl_asc_redirect']['fields']['published']['save_callback'] as $callback)
 			{
-				if (is_array($callback))v
+				if (is_array($callback))
 				{
 					$this->import($callback[0]);
 					$blnVisible = $this->$callback[0]->$callback[1]($blnVisible, ($dc ?: $this));
