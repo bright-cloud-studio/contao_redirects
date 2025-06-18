@@ -105,9 +105,10 @@ $GLOBALS['TL_DCA']['tl_asc_redirect'] = array
     (
 		'__selector__'                => array('type'),
         'default'                     => '{config_legend},type,category',
-		'regular'					  => '{config_legend},type,category;{redirect_legend},code,redirect,target_page,target,target_file,target_url;{domain_legend},domain;{publish_legend},published,start,stop',
-		'regex'					 	  => '{config_legend},type,category;{redirect_legend},code,redirect,target_page,target,target_file,target_url;{domain_legend},domain;{publish_legend},published,start,stop',
-		'directory'					  => '{config_legend},type,category;{redirect_legend},code,redirect,target_page,target,target_file,target_url;{domain_legend},domain;{publish_legend},published,start,stop',
+		'regular'					  => '{config_legend},type,category;{redirect_legend},code,redirect,target_page,target_file,target_url;{domain_legend},domain;{publish_legend},published,start,stop',
+        'regular_tag_based'			  => '{config_legend},type,category;{redirect_legend},code,redirect,target,target_file,target_url;{domain_legend},domain;{publish_legend},published,start,stop',
+		'regex'					 	  => '{config_legend},type,category;{redirect_legend},code,redirect,target_page,target_file,target_url;{domain_legend},domain;{publish_legend},published,start,stop',
+		'directory'					  => '{config_legend},type,category;{redirect_legend},code,redirect,target_page,target_file,target_url;{domain_legend},domain;{publish_legend},published,start,stop',
 		'domain'					  => '{config_legend},type,category;{redirect_legend},code,redirect_domain,target_domain;{publish_legend},published,start,stop'
     ),
 
