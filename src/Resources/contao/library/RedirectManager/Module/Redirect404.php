@@ -175,9 +175,9 @@ class Redirect404 extends Contao_Module
 								}
 							}
 						break;
-
-						default:
-							if (Environment::get('request') == $objRedirect->redirect) {
+						
+						case "regular_tag_based":
+						    if (Environment::get('request') == $objRedirect->redirect) {
 							    
 							    // If we have a target selected
 							    if($objRedirect->target) {
@@ -204,7 +204,27 @@ class Redirect404 extends Contao_Module
     									}
 							        }
 
-							    } else if ($objRedirect->target_url) {
+								} else if ($objRedirect->target_page) {
+									$objPage = PageModel::findByPk($objRedirect->target_page);
+									if ($objPage) {
+										$redirect = $objPage->getFrontendUrl();
+										$redirect_code = $objRedirect->code;
+									}
+								} else if ($objRedirect->target_file) {
+									$objFile = FilesModel::findByUuid($objRedirect->target_file);
+									if ($objFile) {
+										$redirect = Environment::get('base') .'/' .$objFile->path;
+										$redirect_code = $objRedirect->code;
+									}
+								}
+
+							}
+						break;
+
+						default:
+							if (Environment::get('request') == $objRedirect->redirect) {
+							    
+							    if ($objRedirect->target_url) {
 									$redirect = $objRedirect->target_url;
 									$redirect_code = $objRedirect->code;
 								} else if ($objRedirect->target_page) {
@@ -220,7 +240,7 @@ class Redirect404 extends Contao_Module
 										$redirect_code = $objRedirect->code;
 									}
 								}
-			
+
 							}
 						break;
 					}
