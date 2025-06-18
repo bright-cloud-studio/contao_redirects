@@ -7,6 +7,7 @@ $GLOBALS['TL_LANG']['tl_asc_redirect']['code'] 				= array('Code', 'HTTP Status 
 $GLOBALS['TL_LANG']['tl_asc_redirect']['redirect'] 			= array('Redirect', 'Enter the old URL or patern to match.');
 $GLOBALS['TL_LANG']['tl_asc_redirect']['redirect_domain'] 	= array('Redirect Domain', 'Enter the old domain.');
 $GLOBALS['TL_LANG']['tl_asc_redirect']['target_domain'] 	= array('Target Domain', 'Enter the new/target domain.');
+$GLOBALS['TL_LANG']['tl_asc_redirect']['target']            = array('Target Destination', 'Select a Page or News Article as our target.');
 $GLOBALS['TL_LANG']['tl_asc_redirect']['target_page'] 		= array('Target Page', 'Please seleect the page to redirect to.');
 $GLOBALS['TL_LANG']['tl_asc_redirect']['target_file'] 		= array('Target File', 'Please select the file to redirect to.');
 $GLOBALS['TL_LANG']['tl_asc_redirect']['target_url'] 		= array('Target URL', 'Enter redirect target. Overrides Target Page attribute. Use $1 format for regex matches.');
