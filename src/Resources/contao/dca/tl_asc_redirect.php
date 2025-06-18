@@ -105,9 +105,9 @@ $GLOBALS['TL_DCA']['tl_asc_redirect'] = array
     (
 		'__selector__'                => array('type'),
         'default'                     => '{config_legend},type,category',
-		'regular'					  => '{config_legend},type,category;{redirect_legend},code,redirect,target_page,target_file,target_url;{domain_legend},domain;{publish_legend},published,start,stop',
-		'regex'					 	  => '{config_legend},type,category;{redirect_legend},code,redirect,target_page,target_file,target_url;{domain_legend},domain;{publish_legend},published,start,stop',
-		'directory'					  => '{config_legend},type,category;{redirect_legend},code,redirect,target_page,target_file,target_url;{domain_legend},domain;{publish_legend},published,start,stop',
+		'regular'					  => '{config_legend},type,category;{redirect_legend},code,redirect,target_page,target,target_file,target_url;{domain_legend},domain;{publish_legend},published,start,stop',
+		'regex'					 	  => '{config_legend},type,category;{redirect_legend},code,redirect,target_page,target,target_file,target_url;{domain_legend},domain;{publish_legend},published,start,stop',
+		'directory'					  => '{config_legend},type,category;{redirect_legend},code,redirect,target_page,target,target_file,target_url;{domain_legend},domain;{publish_legend},published,start,stop',
 		'domain'					  => '{config_legend},type,category;{redirect_legend},code,redirect_domain,target_domain;{publish_legend},published,start,stop'
     ),
 
@@ -201,6 +201,15 @@ $GLOBALS['TL_DCA']['tl_asc_redirect'] = array
 			'sql'                     => "int(10) unsigned NOT NULL default '0'",
 			'relation'                => array('type'=>'hasOne', 'load'=>'lazy')
 		),
+
+        'target' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_asc_redirect']['target'],
+			'inputType'               => 'text',
+			'eval'                    => array('mandatory'=>true, 'rgxp'=>'url', 'decodeEntities'=>true, 'maxlength'=>2048, 'dcaPicker'=>true, 'tl_class'=>'w50 clr'),
+			'sql'                     => "varchar(2048) NOT NULL default ''"
+		),
+        
 		'target_file' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_asc_redirect']['target_file'],
