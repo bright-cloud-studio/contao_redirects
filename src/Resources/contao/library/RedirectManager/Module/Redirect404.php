@@ -22,8 +22,13 @@ use Contao\Database;
 use Contao\Environment;
 use Contao\FilesModel;
 use Contao\Module as Contao_Module;
+use Contao\NewsModel;
 use Contao\PageModel;
 use Symfony\Component\HttpFoundation\RequestStack;
+
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+
+
 
 use Contao\System;
 
@@ -173,7 +178,33 @@ class Redirect404 extends Contao_Module
 
 						default:
 							if (Environment::get('request') == $objRedirect->redirect) {
-								if ($objRedirect->target_url) {
+							    
+							    // If we have a target selected
+							    if($objRedirect->target) {
+							        
+							        // If this is a Page tag
+							        if(str_contains($objRedirect->target, 'link_url')) {
+							            $page_id = $this->getPageIdFromInsertTag($objRedirect->target);
+							            $objPage = PageModel::findOneBy(['id = ?'], [$page_id]);
+    									if ($objPage) {
+    										$redirect = $objPage->getFrontendUrl();
+    										$redirect_code = $objRedirect->code;
+    									}
+							        }
+							        // If this is a News Article tag
+							        else if(str_contains($objRedirect->target, 'news_url')) {
+							            $news_id = $this->getNewsIdFromInsertTag($objRedirect->target);
+							            $objNews = NewsModel::findOneBy(['id = ?'], [$news_id]);
+
+    									if ($objNews) {
+    									    
+    									    $newsUrl = System::getContainer()->get('contao.routing.content_url_generator')->generate($objNews, [], UrlGeneratorInterface::ABSOLUTE_PATH);
+    										$redirect = $newsUrl;
+    										$redirect_code = $objRedirect->code;
+    									}
+							        }
+
+							    } else if ($objRedirect->target_url) {
 									$redirect = $objRedirect->target_url;
 									$redirect_code = $objRedirect->code;
 								} else if ($objRedirect->target_page) {
@@ -189,9 +220,6 @@ class Redirect404 extends Contao_Module
 										$redirect_code = $objRedirect->code;
 									}
 								}
-								
-								
-								
 			
 							}
 						break;
@@ -207,6 +235,29 @@ class Redirect404 extends Contao_Module
 		}
 
 		return;
+    }
+    
+    
+    public function getPageIdFromInsertTag($tag) {
+        
+        // Remove the first half of the tag
+        $cleaned = str_replace("{{link_url::","", $tag);
+        
+        // Remove the second half of the tag
+        $cleaned = str_replace("|urlattr}}","", $cleaned);
+
+        return $cleaned;
+    }
+    
+    public function getNewsIdFromInsertTag($tag) {
+        
+        // Remove the first half of the tag
+        $cleaned = str_replace("{{news_url::","", $tag);
+        
+        // Remove the second half of the tag
+        $cleaned = str_replace("|urlattr}}","", $cleaned);
+
+        return $cleaned;
     }
 
 }
