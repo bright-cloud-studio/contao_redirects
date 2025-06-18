@@ -153,10 +153,10 @@ $GLOBALS['TL_DCA']['tl_asc_redirect'] = array
 		'type' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_asc_redirect']['type'],
-			'default'                 => 'regular',
+			'default'                 => 'regular_tag_based',
 			'filter'				  => true,
 			'inputType'               => 'select',
-			'options'                 => array('regular' => 'Regular', 'regex' => 'Regular Expression', 'directory' => 'Directory', 'domain' => 'Domain'),
+			'options'                 => array('regular_tag_based' => 'Regular', 'regular' => 'Regular - Legacy', 'regex' => 'Regular Expression', 'directory' => 'Directory', 'domain' => 'Domain'),
 			'eval'                    => array('submitOnChange'=>true, 'tl_class'=>'clr w50', 'includeBlankOption'=>true),
 			'sql'                     => "varchar(32) NOT NULL default ''"
         ),
