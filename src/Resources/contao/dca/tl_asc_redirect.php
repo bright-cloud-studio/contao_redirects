@@ -207,7 +207,7 @@ $GLOBALS['TL_DCA']['tl_asc_redirect'] = array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_asc_redirect']['target'],
 			'inputType'               => 'text',
-			'eval'                    => array('mandatory'=>true, 'rgxp'=>'url', 'decodeEntities'=>true, 'maxlength'=>2048, 'dcaPicker'=>true, 'tl_class'=>'w50 clr'),
+			'eval'                    => array('mandatory'=>false, 'rgxp'=>'url', 'decodeEntities'=>true, 'maxlength'=>2048, 'dcaPicker'=>true, 'tl_class'=>'w50 clr'),
 			'sql'                     => "varchar(2048) NOT NULL default ''"
 		),
         
