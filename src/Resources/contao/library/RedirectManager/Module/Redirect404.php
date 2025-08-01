@@ -89,20 +89,25 @@ class Redirect404 extends Contao_Module
 		if ($objRedirect) {
 			while($objRedirect->next() && !$redirect) {
 				if ($objRedirect->domain == "" || $objRedirect->domain == Environment::get('host')) {
+					
+					$arrUrlParts = explode('?', Environment::get('request'));
+					if (!isset($arrUrlParts[1])) {
+						$arrUrlParts[1] = false;
+					}
 
 					switch ($objRedirect->type) {
 						case "regex":
-							if (preg_match($objRedirect->redirect, Environment::get('url'), $arrMatches)) {
+							if (preg_match($objRedirect->redirect, $arrUrlParts[0], $arrMatches)) {
 								if ($objRedirect->target_url) {
 									$redirect = $objRedirect->target_url;
 									foreach ($arrMatches as $index => $match) {
-										$redirect = str_replace('$'.$index, $match, $redirect);
+										$redirect = str_replace('$'.$index, $match, $redirect) .($arrUrlParts[1] ? '?' .$arrUrlParts[1] : '');
 									}
 									$redirect_code = $objRedirect->code;
 								} else {
 									$objPage = PageModel::findByPk($objRedirect->target_page);
 									if ($objPage) {
-										$redirect = $objPage->getFrontendUrl();
+										$redirect = $objPage->getFrontendUrl() .($arrUrlParts[1] ? '?' .$arrUrlParts[1] : '');
 										$redirect_code = $objRedirect->code;
 									}
 								}
@@ -111,15 +116,15 @@ class Redirect404 extends Contao_Module
 
 						case "directory":
 							$strRedirect = trim($objRedirect->redirect, "/");
-							if (substr(Environment::get('url'), 0, strlen($strRedirect)) == $strRedirect && (substr(Environment::get('url'), strlen($strRedirect), 1) == "/" || Environment::get('url') == ltrim($objRedirect->redirect, "/"))) {
+							if (substr($arrUrlParts[0], 0, strlen($strRedirect)) == $strRedirect && (substr($arrUrlParts[0], strlen($strRedirect), 1) == "/" || $arrUrlParts[0] == ltrim($objRedirect->redirect, "/"))) {
 								if ($objRedirect->target_url) {
 									$strTarget = trim($objRedirect->target_url, "/");
-									$redirect = $strTarget .substr(Environment::get('url'), strlen($strRedirect));
+									$redirect = $strTarget .substr($arrUrlParts[0], strlen($strRedirect)) .($arrUrlParts[1] ? '?' .$arrUrlParts[1] : '');
 									$redirect_code = $objRedirect->code;
 								} else {
 									$objPage = PageModel::findByPk($objRedirect->target_page);
 									if ($objPage) {
-										$redirect = $objPage->getFrontendUrl();
+										$redirect = $objPage->getFrontendUrl() .($arrUrlParts[1] ? '?' .$arrUrlParts[1] : '');
 										$redirect_code = $objRedirect->code;
 									}
 								}
@@ -163,13 +168,13 @@ class Redirect404 extends Contao_Module
 							if ($strRedirectDomain == Environment::get('host')) {
 								if ($objRedirect->target_domain != "") {
 									if ($strTargetProtocol != $strRedirectProtocol || $strTargetDomain != $strRedirectDomain) {
-										$redirect = $strTargetProtocol .'://' .$strTargetDomain .'/' .Environment::get('url');
+										$redirect = $strTargetProtocol .'://' .$strTargetDomain .'/' .$arrUrlParts[0] .($arrUrlParts[1] ? '?' .$arrUrlParts[1] : '');
 										$redirect_code = $objRedirect->code;
 									}
 								} else {
 									$objPage = PageModel::findByPk($objRedirect->target_page);
 									if ($objPage) {
-										$redirect = $objPage->getFrontendUrl();
+										$redirect = $objPage->getFrontendUrl() .($arrUrlParts[1] ? '?' .$arrUrlParts[1] : '');
 										$redirect_code = $objRedirect->code;
 									}
 								}
@@ -177,7 +182,7 @@ class Redirect404 extends Contao_Module
 						break;
 						
 						case "regular_tag_based":
-						    if (Environment::get('url') == $objRedirect->redirect) {
+						    if ($arrUrlParts[0] == $objRedirect->redirect) {
 							    
 							    // If we have a target selected
 							    if($objRedirect->target) {
@@ -187,7 +192,7 @@ class Redirect404 extends Contao_Module
 							            $page_id = $this->getPageIdFromInsertTag($objRedirect->target);
 							            $objPage = PageModel::findOneBy(['id = ?'], [$page_id]);
     									if ($objPage) {
-    										$redirect = $objPage->getFrontendUrl();
+    										$redirect = $objPage->getFrontendUrl() .($arrUrlParts[1] ? '?' .$arrUrlParts[1] : '');
     										$redirect_code = $objRedirect->code;
     									}
 							        }
@@ -199,7 +204,7 @@ class Redirect404 extends Contao_Module
     									if ($objNews) {
     									    
     									    $newsUrl = System::getContainer()->get('contao.routing.content_url_generator')->generate($objNews, [], UrlGeneratorInterface::ABSOLUTE_PATH);
-    										$redirect = $newsUrl;
+    										$redirect = $newsUrl .($arrUrlParts[1] ? '?' .$arrUrlParts[1] : '');
     										$redirect_code = $objRedirect->code;
     									}
 							        }
@@ -207,13 +212,13 @@ class Redirect404 extends Contao_Module
 								} else if ($objRedirect->target_page) {
 									$objPage = PageModel::findByPk($objRedirect->target_page);
 									if ($objPage) {
-										$redirect = $objPage->getFrontendUrl();
+										$redirect = $objPage->getFrontendUrl() .($arrUrlParts[1] ? '?' .$arrUrlParts[1] : '');
 										$redirect_code = $objRedirect->code;
 									}
 								} else if ($objRedirect->target_file) {
 									$objFile = FilesModel::findByUuid($objRedirect->target_file);
 									if ($objFile) {
-										$redirect = Environment::get('base') .'/' .$objFile->path;
+										$redirect = Environment::get('base') .'/' .$objFile->path .($arrUrlParts[1] ? '?' .$arrUrlParts[1] : '');
 										$redirect_code = $objRedirect->code;
 									}
 								}
@@ -222,21 +227,21 @@ class Redirect404 extends Contao_Module
 						break;
 
 						default:
-							if (Environment::get('url') == $objRedirect->redirect) {
+							if ($arrUrlParts[0] == $objRedirect->redirect) {
 							    
 							    if ($objRedirect->target_url) {
-									$redirect = $objRedirect->target_url;
+									$redirect = $objRedirect->target_url .($arrUrlParts[1] ? '?' .$arrUrlParts[1] : '');
 									$redirect_code = $objRedirect->code;
 								} else if ($objRedirect->target_page) {
 									$objPage = PageModel::findByPk($objRedirect->target_page);
 									if ($objPage) {
-										$redirect = $objPage->getFrontendUrl();
+										$redirect = $objPage->getFrontendUrl() .($arrUrlParts[1] ? '?' .$arrUrlParts[1] : '');
 										$redirect_code = $objRedirect->code;
 									}
 								} else if ($objRedirect->target_file) {
 									$objFile = FilesModel::findByUuid($objRedirect->target_file);
 									if ($objFile) {
-										$redirect = Environment::get('base') .'/' .$objFile->path;
+										$redirect = Environment::get('base') .'/' .$objFile->path .($arrUrlParts[1] ? '?' .$arrUrlParts[1] : '');
 										$redirect_code = $objRedirect->code;
 									}
 								}
