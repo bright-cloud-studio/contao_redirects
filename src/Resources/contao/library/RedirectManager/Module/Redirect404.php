@@ -92,7 +92,7 @@ class Redirect404 extends Contao_Module
 
 					switch ($objRedirect->type) {
 						case "regex":
-							if (preg_match($objRedirect->redirect, Environment::get('request'), $arrMatches)) {
+							if (preg_match($objRedirect->redirect, Environment::get('url'), $arrMatches)) {
 								if ($objRedirect->target_url) {
 									$redirect = $objRedirect->target_url;
 									foreach ($arrMatches as $index => $match) {
@@ -111,10 +111,10 @@ class Redirect404 extends Contao_Module
 
 						case "directory":
 							$strRedirect = trim($objRedirect->redirect, "/");
-							if (substr(Environment::get('request'), 0, strlen($strRedirect)) == $strRedirect && (substr(Environment::get('request'), strlen($strRedirect), 1) == "/" || Environment::get('request') == ltrim($objRedirect->redirect, "/"))) {
+							if (substr(Environment::get('url'), 0, strlen($strRedirect)) == $strRedirect && (substr(Environment::get('url'), strlen($strRedirect), 1) == "/" || Environment::get('url') == ltrim($objRedirect->redirect, "/"))) {
 								if ($objRedirect->target_url) {
 									$strTarget = trim($objRedirect->target_url, "/");
-									$redirect = $strTarget .substr(Environment::get('request'), strlen($strRedirect));
+									$redirect = $strTarget .substr(Environment::get('url'), strlen($strRedirect));
 									$redirect_code = $objRedirect->code;
 								} else {
 									$objPage = PageModel::findByPk($objRedirect->target_page);
@@ -163,7 +163,7 @@ class Redirect404 extends Contao_Module
 							if ($strRedirectDomain == Environment::get('host')) {
 								if ($objRedirect->target_domain != "") {
 									if ($strTargetProtocol != $strRedirectProtocol || $strTargetDomain != $strRedirectDomain) {
-										$redirect = $strTargetProtocol .'://' .$strTargetDomain .'/' .Environment::get('request');
+										$redirect = $strTargetProtocol .'://' .$strTargetDomain .'/' .Environment::get('url');
 										$redirect_code = $objRedirect->code;
 									}
 								} else {
@@ -177,7 +177,7 @@ class Redirect404 extends Contao_Module
 						break;
 						
 						case "regular_tag_based":
-						    if (Environment::get('request') == $objRedirect->redirect) {
+						    if (Environment::get('url') == $objRedirect->redirect) {
 							    
 							    // If we have a target selected
 							    if($objRedirect->target) {
@@ -222,7 +222,7 @@ class Redirect404 extends Contao_Module
 						break;
 
 						default:
-							if (Environment::get('request') == $objRedirect->redirect) {
+							if (Environment::get('url') == $objRedirect->redirect) {
 							    
 							    if ($objRedirect->target_url) {
 									$redirect = $objRedirect->target_url;
